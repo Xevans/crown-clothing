@@ -4,7 +4,8 @@ import {
     getAuth, 
     signInWithRedirect, 
     signInWithPopup,
-    GoogleAuthProvider 
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword // for email and password native auth
 } from 'firebase/auth';
 
 import {
@@ -26,15 +27,24 @@ const firebaseConfig = {
   
   // Initialize Firebase
   const firebaseapp = initializeApp(firebaseConfig);
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
+  const googleProvider = new GoogleAuthProvider(); // initialize google auth provider singleton object
+  googleProvider.setCustomParameters({
     prompt: "select_account" // prompt user to select google account
   });
 
+  export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return; // base case, no wmail or passowrd provided
+
+    createAuthUserWithEmailAndPassword(auth, email, password);
+  };
+
   export const auth = getAuth();
-  export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+  export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
   export const db = getFirestore();
+  export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
   export const createUserDocumentFromAuth = async (userAuth) => { // access user instance on authentication
+    if (!userAuth) return; // base case, no user auth provided
+    
     const userDocRef = doc(db, 'users', userAuth.uid); // do operation at the root database (db), user collection/table (users), at this unique id (userAuth.id)
     const userSnapShot = await getDoc(userDocRef); // request a snapshot of the user document (aka user's database recort)
     
@@ -56,10 +66,5 @@ const firebaseConfig = {
     } 
     else { // if user does not exist
         return userDocRef;
-    }
-
-    
-
-    
-    
-  }
+    };  
+}
