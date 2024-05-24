@@ -32,18 +32,31 @@ const firebaseConfig = {
     prompt: "select_account" // prompt user to select google account
   });
 
+  export const auth = getAuth();
+  export const db = getFirestore();
+  export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+  export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
+  
   export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return; // base case, no wmail or passowrd provided
 
-    createAuthUserWithEmailAndPassword(auth, email, password);
+    const userRef = createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        return user;
+
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+
+    if (userRef) return userRef;
   };
 
-  export const auth = getAuth();
-  export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-  export const db = getFirestore();
-  export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
   export const createUserDocumentFromAuth = async (userAuth) => { // access user instance on authentication
-    if (!userAuth) return; // base case, no user auth provided
+    if (!userAuth) return; // base case, no authenticated user object provided
     
     const userDocRef = doc(db, 'users', userAuth.uid); // do operation at the root database (db), user collection/table (users), at this unique id (userAuth.id)
     const userSnapShot = await getDoc(userDocRef); // request a snapshot of the user document (aka user's database recort)

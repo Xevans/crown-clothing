@@ -27,8 +27,8 @@ const SignIn = () => {
     }, [])
 
     const logGoogleUser = async () => {
-        const { user } = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(user);
+        const { user } = await signInWithGooglePopup(); // retrieve the user object from the signInWithGooglePopup function.
+        const userDocRef = await createUserDocumentFromAuth(user); // create a valid user document/record in the db using thise authenticated google user
         
     }
 

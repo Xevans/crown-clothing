@@ -1,27 +1,38 @@
 import { useState } from 'react'
-import { createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'; 
+import { 
+    createAuthUserWithEmailAndPassword,
+    auth,
+    createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'; 
 
 const defaultFormFields = { // pre-defineing state data because we know exactly what is going to go in there and know that should be the case every time
     username: '',
     email: '',
     password: '',
-    confirm_password: ''
+    confirmPassword: ''
 }
 
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields); //setting default state// returns the default fields and setformfield logic to the array elements respectively
     const { username, email, password, confirmPassword } = formFields // destructure values from json obj for short handing
 
+    const logEmailPasswordUser = async () => {
+        const user = await createAuthUserWithEmailAndPassword(email, password);
+        
+        if(user) user.displayName = username; // update user object with form-provided displayname
+
+        const userDocRef = await createUserDocumentFromAuth(user); // create a valid user document/record in the db using this authenticated email/password user
+        //console.log(userDocRef);
+    }
 
     const handleSubmit = (event) => {
-        console.log(event.target)
         event.preventDefault();
-        // check if password and confirm password match // need to extract password
-        
 
-        // check and see if user is being authenticated
+        // ensure passwords match
+        if (!password === confirmPassword) return;
+        //console.log('password and confirm password match!');
 
-        // create a user document
+        // create user in firebase
+        logEmailPasswordUser();
     }
 
     const handleChange = (event) => {
@@ -33,7 +44,9 @@ const SignUpForm = () => {
     return(
         <div>
             <h1> Sign up page</h1>
-            <form onSubmit={() => {}}>
+            <form onSubmit={() => {
+                //handleSubmit();
+            }}>
                 <label>Username</label>
                 <input type='text' required onChange={handleChange} name='username' value={username} />
 
@@ -44,8 +57,8 @@ const SignUpForm = () => {
                 <input type='password' required onChange={handleChange} name='password' value={password} />
 
                 <label>Confirm Password</label>
-                <input type='password' required onChange={handleChange} name='confirm_password' value={confirmPassword} />
-                <button type="submit" onSubmit={handleSubmit}>Sign Up</button>
+                <input type='password' required onChange={handleChange} name='confirmPassword' value={confirmPassword} />
+                <button type="submit" onClick={handleSubmit}>Sign Up</button>
             </form>
         </div>
     );
