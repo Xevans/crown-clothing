@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import './sign-up-form.styles.scss'
+import Button from '../buttons/button.component';
+import FormInput from '../form-input/form-input.component';
 import { 
     createAuthUserWithEmailAndPassword,
     auth,
@@ -59,23 +62,55 @@ const SignUpForm = () => {
     };
 
     return(
-        <div>
-            <h1> Sign up page</h1>
-            <form onSubmit={() => {
-                //handleSubmit();
-            }}>
-                <label>Username</label>
-                <input type='text' required onChange={handleChange} name='username' value={username} />
+        <div className='sign-up-container'>
+        <h2>Dont have an account?</h2>
+        <span>Sign Up with your email and password</span>
+            <form onSubmit={handleSubmit}>
 
-                <label>Email</label>
-                <input type='email' required onChange={handleChange} name='email' value={email} />
+                <FormInput 
+                    label="Display Name"
+                    inputOptions = {{
+                        type: 'text',
+                        required: true,
+                        onChange: handleChange, 
+                        name: 'username',
+                        value: username
+                    }}
+                />
 
-                <label>Password</label>
-                <input type='password' required onChange={handleChange} name='password' value={password} />
+                <FormInput 
+                    label="Email"
+                    inputOptions = {{
+                        type: 'email',
+                        required: true,
+                        onChange: handleChange, 
+                        name: 'email',
+                        value: email
+                    }}
+                />
 
-                <label>Confirm Password</label>
-                <input type='password' required onChange={handleChange} name='confirmPassword' value={confirmPassword} />
-                <button type="submit" onClick={handleSubmit}>Sign Up</button>
+                <FormInput 
+                    label="password"
+                    inputOptions = {{
+                        type: 'password',
+                        required: true,
+                        onChange: handleChange, 
+                        name: 'password',
+                        value: password
+                    }}
+                />
+
+                <FormInput 
+                    label="Confirm Cappword"
+                    inputOptions = {{
+                        type: 'password',
+                        required: true,
+                        onChange: handleChange, 
+                        name: 'confirmPassword',
+                        value: confirmPassword
+                    }}
+                />
+                <Button type="submit">Sign Up</Button>
             </form>
         </div>
     );
