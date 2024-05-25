@@ -45,7 +45,6 @@ const firebaseConfig = {
         const user = userCredential.user;
         console.log(user);
         return user;
-
     })
     .catch((error) => {
         const errorCode = error.code;

@@ -15,6 +15,10 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields); //setting default state// returns the default fields and setformfield logic to the array elements respectively
     const { username, email, password, confirmPassword } = formFields // destructure values from json obj for short handing
 
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    }
+    
     const logEmailPasswordUser = async () => {
         const user = await createAuthUserWithEmailAndPassword(email, password);
         
@@ -28,11 +32,24 @@ const SignUpForm = () => {
         event.preventDefault();
 
         // ensure passwords match
-        if (!password === confirmPassword) return;
+        if (!password === confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
         //console.log('password and confirm password match!');
 
         // create user in firebase
-        logEmailPasswordUser();
+        try {
+            logEmailPasswordUser();
+            resetFormFields();
+        } catch (error) {
+            if(error.code == 'auth/email-already-in-use') {
+                alert('Cannot create user, email already in use');
+            }
+            else {
+                console.log('User creation encountered an error.', error);
+            }
+        }
     }
 
     const handleChange = (event) => {
