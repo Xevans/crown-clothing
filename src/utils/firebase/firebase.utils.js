@@ -5,7 +5,9 @@ import {
     signInWithRedirect, 
     signInWithPopup,
     GoogleAuthProvider,
-    createUserWithEmailAndPassword // for email and password native auth
+    createUserWithEmailAndPassword, // for email and password native auth
+    signInWithEmailAndPassword,
+    signOut,
 } from 'firebase/auth';
 
 import {
@@ -37,23 +39,27 @@ const firebaseConfig = {
   export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
   export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
   
+  // sign up with email and password
   export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return; // base case, no wmail or passowrd provided
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
 
-    const userRef = createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        return user;
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-    });
+  // sign in with email and password
+  export const signInUserWithEmailAndPassword = async (email, password) => {
+    // check if email and password provided
+    if (!email || !password) return;
+    return signInWithEmailAndPassword(auth, email, password);
+  }
 
-    if (userRef) return userRef;
-  };
 
+  // Sign out user
+  export const signOutUser = () => {
+    signOut(auth);
+  }  
+
+
+  // create a user record in the user table. (records are called documents in firebase)
   export const createUserDocumentFromAuth = async (userAuth) => { // access user instance on authentication
     if (!userAuth) return; // base case, no authenticated user object provided
     

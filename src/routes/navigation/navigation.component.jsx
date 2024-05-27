@@ -14,7 +14,7 @@ const Navigation = () => {
                 <Link className='nav-link' to='/shop'> {/* Adding links with react router is done this way */ }
                     SHOP
                 </Link>
-                <Link className='nav-link' to='/sign-in'> {/* Adding links with react router is done this way */ }
+                <Link className='nav-link' to='/auth'> {/* Adding links with react router is done this way */ }
                     LOG IN
                 </Link>
             </div>

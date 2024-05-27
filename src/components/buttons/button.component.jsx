@@ -10,8 +10,8 @@ const BUTTON_TYPES = {
 
 const Button = ({ children, buttonType, ...otherProps }) => {
     return (
-        <button className={`button-container ${BUTTON_TYPES[buttonType]}`}>
-            {children} {/* any child infor between the open close tags*/}
+        <button className={`button-container ${BUTTON_TYPES[buttonType]}`} {...otherProps}> {/* otherProps is what makes all the other properties work*/}
+            {children} {/* any child in between the open close tags*/}
         </button>
     )
 }

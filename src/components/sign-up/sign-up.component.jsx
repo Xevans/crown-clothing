@@ -23,36 +23,33 @@ const SignUpForm = () => {
     }
     
     const logEmailPasswordUser = async () => {
-        const user = await createAuthUserWithEmailAndPassword(email, password);
-        
-        if(user) user.displayName = username; // update user object with form-provided displayname
-
-        const userDocRef = await createUserDocumentFromAuth(user); // create a valid user document/record in the db using this authenticated email/password user
-        //console.log(userDocRef);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        // ensure passwords match
-        if (!password === confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-        //console.log('password and confirm password match!');
-
-        // create user in firebase
         try {
-            logEmailPasswordUser();
-            resetFormFields();
+            const user = await createAuthUserWithEmailAndPassword(email, password);
+            await createUserDocumentFromAuth(user); // create a valid user document/record in the db using this authenticated email/password user
+            if(user) user.displayName = username; // update user object with form-provided displayname
         } catch (error) {
-            if(error.code == 'auth/email-already-in-use') {
+            if(error.code === 'auth/email-already-in-use') {
                 alert('Cannot create user, email already in use');
-            }
+            } 
             else {
                 console.log('User creation encountered an error.', error);
             }
         }
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // ensure passwords match
+        if (!password === confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        } else if (password.length < 6) {
+            alert('Password is too weak. Password should be at least 6 characters');
+            return;
+        }
+        // create user in firebase
+        logEmailPasswordUser();
+        resetFormFields();
     }
 
     const handleChange = (event) => {
