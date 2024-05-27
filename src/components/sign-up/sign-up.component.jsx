@@ -87,7 +87,7 @@ const SignUpForm = () => {
                 />
 
                 <FormInput 
-                    label="password"
+                    label="Password"
                     inputOptions = {{
                         type: 'password',
                         required: true,
@@ -98,7 +98,7 @@ const SignUpForm = () => {
                 />
 
                 <FormInput 
-                    label="Confirm Cappword"
+                    label="Confirm Password"
                     inputOptions = {{
                         type: 'password',
                         required: true,

@@ -96,7 +96,7 @@ const SignInForm = () => {
                 />
 
                 <FormInput 
-                    label="password"
+                    label="Password"
                     inputOptions = {{
                         type: 'password',
                         required: true,
