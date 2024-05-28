@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { UserContext } from '../../contexts/user.context';
 import './sign-up-form.styles.scss'
 import Button from '../buttons/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -21,12 +22,18 @@ const SignUpForm = () => {
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
+
+
+    const { setCurrentUser} = useContext(UserContext) // we are destructuring the setter member of the context state because we just want to update the user context in this component.const { setCurrentUser} = useContext(UserContext) // we are destructuring the setter member of the context state because we just want to update the user context in this component.
+
+    
     
     const logEmailPasswordUser = async () => {
         try {
-            const user = await createAuthUserWithEmailAndPassword(email, password);
-            await createUserDocumentFromAuth(user); // create a valid user document/record in the db using this authenticated email/password user
+            const {user} = await createAuthUserWithEmailAndPassword(email, password);
             if(user) user.displayName = username; // update user object with form-provided displayname
+            await createUserDocumentFromAuth(user); // create a valid user document/record in the db using this authenticated email/password user
+            setCurrentUser(user);
         } catch (error) {
             if(error.code === 'auth/email-already-in-use') {
                 alert('Cannot create user, email already in use');

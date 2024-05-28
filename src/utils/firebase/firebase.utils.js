@@ -39,11 +39,13 @@ const firebaseConfig = {
   export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
   export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
   
+
   // sign up with email and password
   export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return; // base case, no wmail or passowrd provided
     return createUserWithEmailAndPassword(auth, email, password);
   }
+
 
   // sign in with email and password
   export const signInUserWithEmailAndPassword = async (email, password) => {
@@ -54,7 +56,7 @@ const firebaseConfig = {
 
 
   // Sign out user
-  export const signOutUser = () => {
+  export const signOutUser = async() => { // made async because we want to return something from signout
     signOut(auth);
   }  
 
