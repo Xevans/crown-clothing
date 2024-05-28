@@ -1,9 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { getRedirectResult } from 'firebase/auth'
 import Button from '../../components/buttons/button.component';
 import FormInput from '../../components/form-input/form-input.component';
-
-import { UserContext } from '../../contexts/user.context'; // returns the state object for whatever the userState is currently set at
 
 import "./sign-in-form.styles.scss"
 
@@ -22,8 +20,6 @@ const SignInForm = () => {
         email: '',
         password: '',
     }
-
-    const { setCurrentUser} = useContext(UserContext) // we are destructuring the setter member of the context state because we just want to update the user context in this component.
 
 
     /* state tracking */
@@ -45,7 +41,6 @@ const SignInForm = () => {
     const signInUser = async () => {
         try {
            const {user} = await signInUserWithEmailAndPassword(email, password);
-           setCurrentUser(user); // update the global user context
         } catch (error) {
             if (error === 'auth/user-not-found') {
                 alert('no user associated with this email');
@@ -78,10 +73,7 @@ const SignInForm = () => {
 
     // google pop-up sign in method
     const logGoogleUser = async () => {
-        const { user } = await signInWithGooglePopup(); // retrieve the user object from the signInWithGooglePopup function.
-        //setCurrentUser(user);
-        await createUserDocumentFromAuth(user); // create a valid user document/record in the db using thise authenticated google user
-        
+        await signInWithGooglePopup(); // retrieve the user object from the signInWithGooglePopup function.
     }
 
 

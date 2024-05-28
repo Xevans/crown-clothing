@@ -7,12 +7,7 @@ import { ReactComponent as CrwnLogo } from '../../assets/crown.svg' // turn a st
 
 const Navigation = () => {
 
-    const { currentUser, setCurrentUser } = useContext(UserContext); // we destruction the current user becase we simply want the current user object saved to the user context for this component
-    console.log(currentUser);
-    const signOutHandler = async() => {
-      signOutUser();
-      setCurrentUser(null);
-    }
+    const { currentUser } = useContext(UserContext); // we destruction the current user because we simply want the current user object saved to the user context for this component
 
     return(
       <Fragment> {/* Fragment allows you to add a parent level tag without rendering anything. As opposed to having a div */}
@@ -27,7 +22,7 @@ const Navigation = () => {
 
                 { // if a current user exists (not null), show 'LOG OUT', otherwise, show 'LOG IN'.
                   currentUser ? ( 
-                    <span className='nav-link' onClick={signOutHandler}>LOG OUT</span>
+                    <span className='nav-link' onClick={signOutUser}>LOG OUT</span>
                   ) : 
                   (
                     <Link className='nav-link' to='/auth'> {/* Adding links with react router is done this way */ }
