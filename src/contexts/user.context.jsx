@@ -10,14 +10,13 @@ import { onAuthStateChangedListener, createUserDocumentFromAuth } from "../utils
 export const UserContext = createContext({
     currentUser: null,
     setCurrentUser: () => null,
-    
 });
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const value = { currentUser, setCurrentUser };
 
-    // Recall we implement useEffect when there is code we want to run onMount.
+    // Recall we implement useEffect when there is code we only want to run when this component is mounted for the first time.
     // If we implement the listener without this, it will always be listening
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
