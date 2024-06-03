@@ -12,6 +12,7 @@ export const CartProvider = ({children}) => {
     const value = { isCartOpen, setIsCartOpen };
 
     return (
-        <CartProvider value={value}> {children} </CartProvider>
-    );
+        <CartContext.Provider value={value}> {children} </CartContext.Provider>
+
+    )
 };
