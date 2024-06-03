@@ -1,5 +1,6 @@
 import { Fragment, useContext } from 'react'
 import { UserContext } from '../../contexts/user.context';
+import { CartContext } from '../../contexts/cart-dropdown.context';
 import { Outlet, Link } from 'react-router-dom'; // for rendering nested route components
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 import CartIcon from '../../components/cart-icon/cart-icon-component';
@@ -12,6 +13,7 @@ import { ReactComponent as CrwnLogo } from '../../assets/crown.svg' // turn a st
 const Navigation = () => {
 
     const { currentUser } = useContext(UserContext); // we destruction the current user because we simply want the current user object saved to the user context for this component
+    const { isCartOpen, setCartOpen } = useContext(CartContext);
 
     return(
       <Fragment> {/* Fragment allows you to add a parent level tag without rendering anything. As opposed to having a div */}
@@ -36,7 +38,10 @@ const Navigation = () => {
                 }
                 <CartIcon />
             </div>
-            <CartDropdown></CartDropdown>
+            { /* Cant use an if statement here, so wed use &&. */
+              /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check isCartOpen */
+              isCartOpen && <CartDropdown></CartDropdown>
+            }
         </div>
         <Outlet />
       </Fragment>

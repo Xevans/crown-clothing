@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+
 import { UserProvider } from './contexts/user.context';
 import { ProductsProvider } from './contexts/products.context';
+import { CartProvider } from './contexts/cart-dropdown.context';
+
 import reportWebVitals from './reportWebVitals';
 
 import './index.scss';
@@ -14,7 +17,7 @@ root.render(
     <BrowserRouter> {/* React router needs to have all components to be wrapped in Browser Router to be routable. By wrapping app, it extends routability to all components */}
       <UserProvider> {/* The user context wraps around the top level component to give the entire app global access to the user object. */}
         <ProductsProvider>
-          <App /> 
+          <App /> {/* does not load when Cart Provider is wrapped around App */}
         </ProductsProvider>
       </UserProvider>
     </BrowserRouter> 
