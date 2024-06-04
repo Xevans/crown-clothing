@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
-import { 
+import {  // Authorization - Firebase
     getAuth, 
     signInWithRedirect, 
     signInWithPopup,
@@ -11,11 +11,15 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 
-import {
+import { // No-SQL DB - Firestore
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs
 } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -37,6 +41,52 @@ googleProvider.setCustomParameters({
 
 export const auth = getAuth();
 export const db = getFirestore();
+
+// writing objects to Firestore.
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase()); // 
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+}; 
+
+
+export const getCategoriesAndDocuments = async() => {
+  const collectionRef = collection(db, 'categories'); // fetch a reference to this db that exists
+  const q = query(collectionRef);
+
+  const querySnapShot = await getDocs(q);
+  const categoryMap = querySnapShot.docs.reduce((accumulator, docSnapShot) => { // reduce is like a for loop where yopu do some op on each element per loop
+    const { title, items } = docSnapShot.data(); // pull the title (e.g. sneakers, and the items (the product objs themselves))
+    accumulator[title.toLowerCase()] = items;
+    return accumulator;
+  }, {}) 
+
+  return categoryMap;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);  
 

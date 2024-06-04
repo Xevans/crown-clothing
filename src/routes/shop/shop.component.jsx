@@ -1,22 +1,21 @@
-import { useContext } from 'react';
-import { ProductsContext } from '../../contexts/products.context';
-import ProductCard from '../../components/product-card/product-card.component';
-
+import { Fragment, useContext } from 'react';
+import { CategoriesContext } from '../../contexts/categories.context';
+import CategoryPreview from '../../components/category-preview/category-preview.component';
 import './shop.styles.scss';
 
 const Shop = () => {
 
-    const { products } = useContext(ProductsContext);
+    const { categoriesMap } = useContext(CategoriesContext);
+    console.log(categoriesMap);
 
     return (
-        <div className='products-container'>
-            {products.map((product) => ( // destructuring the data array objects coming in. just want name and id.
-                <div key={product.id}>
-                    <ProductCard product={product} ></ProductCard>
-                </div>
-            ))}
+        <div className='shop-container'>
+            {Object.keys(categoriesMap).map((title) => {
+                const products = categoriesMap[title];
+                return <CategoryPreview key={title} title={title} products={products} />
+            })}
         </div>
-    )
+    );
 };
 
 export default Shop;
