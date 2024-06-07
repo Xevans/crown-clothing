@@ -7,12 +7,11 @@ import CategoryPreview from '../../components/category-preview/category-preview.
 const CategoriesPreview = () => {
 
     const { categoriesMap } = useContext(CategoriesContext);
-    console.log(categoriesMap);
 
     return (
         <div className='categories-container'>
             {Object.keys(categoriesMap).map((title) => {
-                const products = categoriesMap[title];
+                const products = categoriesMap[title]; // extract title from current iteration map object e.g. 'hats'
                 return <CategoryPreview key={title} title={title} products={products} />
             })}
         </div>
