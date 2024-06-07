@@ -9,12 +9,12 @@ const CategoriesPreview = () => {
     const { categoriesMap } = useContext(CategoriesContext);
 
     return (
-        <div className='categories-container'>
+        <Fragment>
             {Object.keys(categoriesMap).map((title) => {
                 const products = categoriesMap[title]; // extract title from current iteration map object e.g. 'hats'
                 return <CategoryPreview key={title} title={title} products={products} />
             })}
-        </div>
+        </Fragment>
     );
 };
 
