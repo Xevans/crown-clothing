@@ -40,7 +40,7 @@ const Navigation = () => {
             </div>
             { /* Cant use an if statement here, so wed use &&. */
               /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check isCartOpen */
-              isCartOpen && <CartDropdown></CartDropdown>
+              isCartOpen && <CartDropdown />
             }
         </div>
         <Outlet />
