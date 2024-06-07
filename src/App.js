@@ -12,7 +12,7 @@ const App = () => {
       <Route path='/' element={<Navigation />}> {/*At base URL, render Navigation component*/}
         {/* Index tells react to render this component with the component at the parent route (navigation) [sibling routes require a unique url]. It will render at direct parent's outlet tag */}
         <Route index element={<Home />} />  
-        <Route path='shop' element={<Shop />}/>
+        <Route path='shop/*' element={<Shop />}/> {/* '/*' tells react-router-dom to expect further (child) routes from the component at '/shop' */}
         <Route path='auth' element={<Authentication />}/>
         <Route path='checkout' element={<Checkout />} />
 

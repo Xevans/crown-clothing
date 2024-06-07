@@ -1,8 +1,7 @@
 import { createContext, useState, useEffect } from "react";
-import SHOP_DATA from "../shop-data";
 import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 
-// always need a context and provider for a context.
+// This context holds the map of products pulled from the cloud firestore database.
 
 export const CategoriesContext = createContext({
     categories: {},

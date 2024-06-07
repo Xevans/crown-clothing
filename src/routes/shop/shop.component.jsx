@@ -1,20 +1,18 @@
-import { Fragment, useContext } from 'react';
-import { CategoriesContext } from '../../contexts/categories.context';
-import CategoryPreview from '../../components/category-preview/category-preview.component';
+import { Routes, Route } from 'react-router-dom';
+
+import Category from '../category/category.component';
+import CategoriesPreview from '../categories-preview/categories-preview.component';
+
 import './shop.styles.scss';
 
 const Shop = () => {
 
-    const { categoriesMap } = useContext(CategoriesContext);
-    console.log(categoriesMap);
-
     return (
-        <div className='shop-container'>
-            {Object.keys(categoriesMap).map((title) => {
-                const products = categoriesMap[title];
-                return <CategoryPreview key={title} title={title} products={products} />
-            })}
-        </div>
+        <Routes>
+        {/*Recall that since we gave 'shop' a '/*' in App.js It can now do nested routing */}
+            <Route index element={<CategoriesPreview />} />
+            <Route path=":category" element={<Category />} />
+        </Routes>
     );
 };
 
