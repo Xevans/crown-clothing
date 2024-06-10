@@ -6,7 +6,7 @@ import { signOutUser } from '../../utils/firebase/firebase.utils';
 import CartIcon from '../../components/cart-icon/cart-icon-component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 
-import { NavigationContainer, LogoContainer, NavLinksContainer, NavLink } from './navigation.styles';
+import './navigation.styles.scss'
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg' // turn a static file into a react component
 
 
@@ -17,36 +17,32 @@ const Navigation = () => {
 
     return(
       <Fragment> {/* Fragment allows you to add a parent level tag without rendering anything. As opposed to having a div */}
-        <NavigationContainer>
-
-          <LogoContainer to='/'>
+        <div className='navigation'>
+            <Link className='logo-container' to='/'>
             <CrwnLogo className='logo' />
-          </LogoContainer>
+            </Link>
+            <div className='nav-links-container'>
+                <Link className='nav-link' to='/shop'> {/* Adding links with react router is done this way */ }
+                    SHOP
+                </Link>
 
-          <NavLinksContainer>
-              <NavLink to='/shop'> {/* Adding links with react router is done this way */ }
-                  SHOP
-              </NavLink>
-
-              { // if a current user exists (not null), show 'LOG OUT', otherwise, show 'LOG IN'.
-                currentUser ? ( 
-                  <NavLink as='span' onClick={signOutUser}>LOG OUT</NavLink>
-                ) : 
-                (
-                  <NavLink to='/auth'> {/* Adding links with react router is done this way */ }
-                    LOG IN
-                  </NavLink>
-                )
-              }
-              <CartIcon />
-          </NavLinksContainer>
-
-          { /* Cant use an if statement here, so wed use &&. */
-            /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check isCartOpen */
-            isCartOpen && <CartDropdown />
-          }
-        </NavigationContainer>
-
+                { // if a current user exists (not null), show 'LOG OUT', otherwise, show 'LOG IN'.
+                  currentUser ? ( 
+                    <span className='nav-link' onClick={signOutUser}>LOG OUT</span>
+                  ) : 
+                  (
+                    <Link className='nav-link' to='/auth'> {/* Adding links with react router is done this way */ }
+                      LOG IN
+                    </Link>
+                  )
+                }
+                <CartIcon />
+            </div>
+            { /* Cant use an if statement here, so wed use &&. */
+              /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check isCartOpen */
+              isCartOpen && <CartDropdown />
+            }
+        </div>
         <Outlet />
       </Fragment>
     )
