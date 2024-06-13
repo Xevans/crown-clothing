@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Button from '../buttons/button.component';
 
-export const CardButton = styled(Button)`
+export const CardButton = styled(Button)` /* CardButton extends the Button component and applies styling.*/
   width: 80%;
   opacity: 0.7;
   position: absolute;
