@@ -1,5 +1,5 @@
 import {ProductCardContainer, Footer, Name, Price, CardButton} from './product-card.styles.jsx'
-import Button, { BUTTON_TYPES } from '../buttons/button.component';
+import { BUTTON_TYPES } from '../buttons/button.component';
 import { useContext } from 'react';
 import { CartContext } from '../../contexts/cart.context';
 
