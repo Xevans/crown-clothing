@@ -3,7 +3,7 @@ import { getRedirectResult } from 'firebase/auth'
 import Button, { BUTTON_TYPES } from '../../components/buttons/button.component';
 import FormInput from '../../components/form-input/form-input.component';
 
-import "./sign-in-form.styles.scss"
+import {SignInContainer, ButtonsContainer} from "./sign-in-form.styles.jsx"
 
 import { 
     auth,
@@ -78,7 +78,7 @@ const SignInForm = () => {
 
 
     return (
-        <div className='sign-in-container'>
+        <SignInContainer>
             <h2>Already have an account?</h2>
             <span>Sign in with your email and password</span>
             <form onSubmit={handleSubmit}>
@@ -104,13 +104,13 @@ const SignInForm = () => {
                     }}
                 />
 
-                <div className='buttons-container'>
+                <ButtonsContainer>
                     <Button type='submit' buttonType={BUTTON_TYPES.base}>Sign in</Button>
                     <Button type='button' buttonType={BUTTON_TYPES.google} onClick={logGoogleUser}> Sign in with Google </Button>
-                </div>
+                </ButtonsContainer>
             </form>
             
-        </div>
+        </SignInContainer>
     )
 }
 
