@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { CategoriesContext } from '../../contexts/categories.context';
 import ProductCard from '../../components/product-card/product-card.component';
 
-import './category.styles.scss'
+import { CategoryContainer, CategoryPageTitle } from './category.styles.jsx'
 
 const Category = () => {
     
@@ -39,9 +39,9 @@ const Category = () => {
     return(
 
         <Fragment>
-            <h2 className='category-page-title'> {category.toLocaleUpperCase()} </h2>
+            <CategoryPageTitle> {category.toLocaleUpperCase()} </CategoryPageTitle>
         
-            <div className='category-container'>
+            <CategoryContainer>
                 {
                     // && checks if products exist
                     // if true, then the we map and render.
@@ -50,7 +50,7 @@ const Category = () => {
                     products && products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                 ))}
-            </div>
+            </CategoryContainer>
         </Fragment>
     );
 };

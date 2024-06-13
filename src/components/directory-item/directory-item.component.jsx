@@ -1,4 +1,4 @@
-import "./directory-item.styles.scss"
+import { BackgroundImage, DirectoryItemContainer, Body} from "./directory-item.styles.jsx"
 
 
 // individual directory items that appear on the home page
@@ -7,15 +7,13 @@ const DirectoryItem = ({category}) => {
     const { id, imageUrl, title, } = category;
 
     return (
-      <div key={id} className="directory-item-container">
-        <div className="background-image" style={{
-          backgroundImage: `url(${imageUrl})`
-        }} />
-        <div className="directory-item-body-container">
+      <DirectoryItemContainer key={id}>
+        <BackgroundImage imageUrl={imageUrl} />
+        <Body>
           <h1>{title}</h1>
           <p>Shop Now</p>
-        </div>
-      </div>
+        </Body>
+      </DirectoryItemContainer>
     )
 }
 
