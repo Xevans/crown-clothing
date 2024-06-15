@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 export const NavigationContainer = styled.div`
-  height: 70px;
+  height: 100px;
   width: 100%;
   display: flex;
   justify-content: space-between;

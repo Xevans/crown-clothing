@@ -11,7 +11,7 @@ export const BackgroundImage = styled.div`
 `;
 
 export const Body = styled.div`
-  height: 90px;
+  height: 150px;
   padding: 0 25px;
   display: flex;
   flex-direction: column;
@@ -24,21 +24,20 @@ export const Body = styled.div`
 
   h2 {
     font-weight: bold;
-    margin: 0 6px 0;
     font-size: 22px;
     color: #4a4a4a;
     text-transform: uppercase;
   }
 
   p {
-    font-weight: lighter;
+    /*font-weight: lighter;*/
     font-size: 16px;
   }
 `;
 
 export const DirectoryItemContainer = styled.div`
   min-width: 30%;
-  height: 240px;
+  height: 350px;
   flex: 1 1 auto;
   display: flex;
   align-items: center;

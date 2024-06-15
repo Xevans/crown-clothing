@@ -15,6 +15,8 @@ const Navigation = () => {
     const { currentUser } = useContext(UserContext); // we destruction the current user because we simply want the current user object saved to the user context for this component
     const { isCartOpen, setCartOpen } = useContext(CartContext);
 
+
+
     return(
       <Fragment> {/* Fragment allows you to add a parent level tag without rendering anything. As opposed to having a div */}
         <NavigationContainer>
@@ -39,7 +41,7 @@ const Navigation = () => {
                 <CartIcon />
             </NavLinksContainer>
             { /* Cant use an if statement here, so wed use &&. */
-              /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check isCartOpen */
+              /* && checks if both sides are true. if not it returns false. This works for us because a component will always return true, so we essentially check if isCartOpen is true */
               isCartOpen && <CartDropdown />
             }
         </NavigationContainer>
